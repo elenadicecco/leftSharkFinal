@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<title>Left Shark</title>
+ 
+<!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2015 -->
+<!-- see http://zimjs.com/templates for more templates and meta tags -->
+
+<script>var zon = true; // true for comments from zim code</script>
+<script src="http://d309knd7es5f10.cloudfront.net/zim_1.4.js"></script><!-- take off _min to see code -->
+<script src="http://code.createjs.com/createjs-2014.12.12.min.js"></script> 
+<!-- or can go to zimjs.com and createjs.com for individual modules -->
+
+<script src="js/view.js"></script>
+
+<style>
+	body {margin:0px; padding:0px; background-color:#FFF;}
+	#myCanvas {position:absolute; background-color:#8fb6e1;}
+</style>
+
+	<audio loop>
+		  <source src="assets/teenageDream.ogg" type="audio/ogg">
+		  <source src="assets/teenageDream.mp3" type="audio/mpeg">
+	</audio> 
+
+<script>
+
+// SCALING OPTIONS
+// "none"		sets canvas and stage to dimensions and does not scale if window changes
+// "fit"		sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+// "full"		sets canvas and stage to window size (canvas is actually set to screen size)
+var stage;
+var stageW;
+var stageH;
+
+var scaling = "full"; // full automatically sets width and height to window size
+var width = null;
+var height = null;
+var frame = new zim.Frame(scaling, width, height); 
+frame.on("ready", function() {	
+	zog("ready from ZIM Frame");
+	
+	stage = frame.stage;
+	stageW = frame.stageW;
+	stageH = frame.stageH;
+
+	var hLayoutManager = new zim.LayoutManager();
+	
+	var gridManager = new zim.GridManager();
+	
+	var hP = app.makeHorizontalPages(hLayoutManager, gridManager);
+
+	
+	// left, right
+	var hPages = new zim.Pages(stage, [
+		{page:hP.main, swipe:[hP.info,hP.info,null,null]},
+		{page:hP.info, swipe:[hP.main,hP.main,null,null]},
+	], "slide", 600);
+	
+	hPages.on("info", function (e){
+		console.log(e);
+	});
+
+	orientate();
+	// put resizing code in here (scaling="full" only)
+	frame.on("resize", function(e) {
+		stageW = frame.stageW;
+		stageH = frame.stageH;
+		
+		hLayoutManager.resize();
+		
+		hPages.resize();
+		
+		zim.scaleTo(hP.dance, stage, 70, 70);
+		hP.dance.x = stageW/2;
+		hP.dance.y = stageH/2;
+		
+		stage.update();
+	}); // end of resizing
+
+	
+	// put orientation change code in here
+	frame.on("orientation", orientate);
+	
+	function orientate(e) {	
+		zog(frame.orientation);	
+		
+			stage.addChild(hPages);
+			hPages.enable(); 
+			hLayoutManager.enable();
+		
+		stage.update();
+	} // end of orientation
+
+}); // end of ready
+</script>
+</head>
+
+	<body>
+		<audio autoplay loop>
+			<source src="assets/teenageDream.ogg" type="audio/ogg">
+			<source src="assets/teenageDream.mp3" type="audio/mpeg">
+		</audio> 
+	 	<!-- <input id="loadBtn" type="button" value="Begin Loading" onclick="load()"/>
+	    <input id="stopBtn" type="button" value="Stop Playing" onclick="createjs.Sound.stop();" disabled="disabled" />
+		<label id="display">Waiting for User Input. Click "Begin Loading".</label> -->
+	</body>
+</html>
