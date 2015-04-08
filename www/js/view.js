@@ -28,21 +28,21 @@ var app = function(app) {
 		var titleText = new createjs.Text();
 		titleText.textAlign = "center";
 		titleText.textBaseline = "top";
-		titleText.font = "60px Helvetica";
+		titleText.font = "50px Helvetica";
 		titleText.color = "#8fb6e1";
 		titleText.text = "Left Shark";
 
 		var instructions = new createjs.Text();
 		instructions.textAlign = "center";
 		instructions.textBaseline = "middle";
-		instructions.font = "40px Helvetica";
+		instructions.font = "30px Helvetica";
 		instructions.color = "#FFFFFF";
 		instructions.text = "Press the left and right side" + "\n" +  "of the screen to make" + "\n" + "Left Shark dance!";
 
 		var swipeLeftText = new createjs.Text();
 		swipeLeftText.textAlign = "center";
 		swipeLeftText.textBaseline = "bottom";
-		swipeLeftText.font = "40px Helvetica";
+		swipeLeftText.font = "30px Helvetica";
 		swipeLeftText.color = "#8fb6e1";
 		swipeLeftText.text = "Swipe left to begin.";
 
